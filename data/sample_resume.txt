@@ -1,0 +1,15 @@
+Adnan Khan
+Software Engineer
+
+Summary
+Software Engineer with 3 years of experience developing backend services and data pipelines. Skilled in Python, SQL and scikit-learn, with a solid foundation in data analysis and machine learning fundamentals.
+
+Experience
+Software Engineer, DataWorks Ltd (2023 - present)
+Built and maintained REST APIs in Python and deployed services with Docker. Automated reporting pipelines and improved data quality checks. Collaborated with analysts using Git and Jira.
+
+Junior Developer, CloudNine Solutions (2022 - 2023)
+Developed internal tools in Python and wrote SQL queries for reporting dashboards. Worked closely with the QA team and demonstrated strong teamwork and problem solving skills.
+
+Education
+Bachelor of Technology in Information Technology

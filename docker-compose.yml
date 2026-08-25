@@ -1,0 +1,46 @@
+# Local two-service stack: the light app + the Gemma model service.
+#
+# Teaches: build one image and run it as two roles, service-to-service networking
+# (the app reaches the model by its service NAME, not an IP), env injection, a
+# named volume for the model cache, and container healthchecks.
+#
+# Run:   HF_TOKEN=hf_xxx docker compose up --build
+# Open:  http://localhost:8501
+
+services:
+  gemma-api:
+    build: .
+    image: genfeedback:latest          # built once here, reused by `app` below
+    command: ["uvicorn", "gemma_api:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      - GENFEEDBACK_GEMMA_BASE=${GENFEEDBACK_GEMMA_BASE:-google/gemma-4-E2B-it}
+      # Secret comes from your shell / .env — never hardcode it (k8s: a Secret).
+      - HF_TOKEN=${HF_TOKEN:?set HF_TOKEN in your shell or a .env file}
+    volumes:
+      - hf-cache:/models/hf            # persist the ~9.6GB weights across restarts
+    ports:
+      - "8000:8000"
+    healthcheck:
+      # Slim image has no curl, so probe with Python's stdlib.
+      test: ["CMD", "python", "-c",
+             "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 300s              # generous: first boot downloads the model
+
+  app:
+    build: .
+    image: genfeedback:latest
+    command: ["streamlit", "run", "app.py",
+              "--server.address=0.0.0.0", "--server.port=8501"]
+    environment:
+      # Reach the model service by its compose name. This is the decoupling seam.
+      - GENFEEDBACK_GEMMA_API_URL=http://gemma-api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - gemma-api
+
+volumes:
+  hf-cache:                            # named volume; survives `compose down`

@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.DS_Store
+*.log
+nohup.out
+
+# Model artifacts are reproducible (train_bert) and exceed GitHub's file limits.
+artifacts/
+
+# Corpora are generated (datagen) or external; only the demo samples ship.
+data/*
+!data/sample_jd.txt
+!data/sample_resume.txt
+
+# Local working notes — not part of the published project.
+NOTES.md

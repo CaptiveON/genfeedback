@@ -1,0 +1,16 @@
+# Keep the build context small and the image clean. Everything here is either
+# huge, secret, or irrelevant to running the app inside a container.
+.venv/                  # GBs, and tied to the host Python — never ship it
+**/__pycache__/
+*.pyc
+*.log
+.git/
+.gitignore
+.DS_Store
+artifacts/gemma_feedback/   # not used at serve time (Gemma loads from HF)
+# Ship only the FINAL NER model, not 53 training checkpoints or TB logs.
+# (Lesson: serving images carry inference artifacts, never training leftovers.)
+artifacts/bert_ner/checkpoint-*/
+artifacts/bert_ner/runs/
+run_ui.sh               # host-only launcher
+NOTES.md

@@ -1,0 +1,16 @@
+torch>=2.1
+transformers>=5.0,<6         # 5.x required (dtype= API, Gemma 4 support); tested on 5.9.0
+datasets>=2.18
+scikit-learn>=1.3
+numpy>=1.24
+nltk>=3.8
+streamlit>=1.30
+accelerate>=0.30
+seqeval>=1.2
+peft>=0.10
+huggingface_hub>=0.23       # gated-model download / auth
+timm>=1.0                   # required by the multimodal Gemma vision tower
+fastapi>=0.110              # gemma_api model microservice
+uvicorn[standard]>=0.27     # ASGI server for gemma_api
+requests>=2.31              # app -> gemma_api HTTP client
+pytest>=8                   # test suite (tests/)

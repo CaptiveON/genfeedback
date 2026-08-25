@@ -1,0 +1,3 @@
+Senior Machine Learning Engineer
+
+We are looking for a Senior Machine Learning Engineer with 5 years of experience building production ML systems. The ideal candidate has strong skills in Python, PyTorch and TensorFlow, and hands-on experience with NLP and computer vision. You will deploy models using Docker and Kubernetes on AWS, and collaborate with product teams using Jira and Git. A Master of Science in Computer Science or a related field is required. Excellent communication and leadership skills are essential, and experience mentoring junior engineers is a plus.
